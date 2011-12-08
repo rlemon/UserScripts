@@ -4,7 +4,7 @@ The complete copy of the license is attached to this document.
 ------
 SUMMARY:
 
-    Upbar-userscript  Copyright (C) 2011
+    unicorns.user.js  Copyright (C) 2011
     This program comes with ABSOLUTELY NO WARRANTY!
     This is free software, and you are welcome to redistribute it
     under certain conditions, as outlined in the full content of
