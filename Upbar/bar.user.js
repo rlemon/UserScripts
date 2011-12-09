@@ -25,10 +25,25 @@ EmbedCodeOnPage("(" + function_contents.toString() + ")()");
 }
 
 EmbedFunctionOnPageAndExecute(function() {
-
-    $(document).scrollTo(999999999);
-        $('body').append('<div id="topbar" style="position: fixed; top: 0px; left: 0px; z-index: 1; width: 49%; background-color: #fff; border-bottom: 2px solid #777; box-shadow: 0px 5px 10px #777; padding: 5px;"></div>')
-    $('#topbar').append( $('#present-users').detach() );
-    $('#topbar').append( $('#sidebar-menu').detach() );
-
+	var topbar = $("<div>");
+	topbar.css({
+		'position': 'fixed',
+		'top': '-40px',
+		'left': '0px',
+		'z-index': '1',
+		'width': '49%',
+		'background-color': '#fff',
+		'border-bottom': '2px solid #777',
+		'box-shadow': '0px 5px 10px #777',
+		'padding': '5px'
+	});
+    topbar.append( $('#present-users').detach() );
+    topbar.append( $('#sidebar-menu').detach() );
+	topbar.hover(function() {
+		$(this).stop(true, true).animate({top:0}, 300); 
+	}, function() {
+		$(this).stop(false, false).animate({top:-40}, 300); 
+	});
+	
+    $('#chat-body').append(topbar);
 });
