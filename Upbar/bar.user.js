@@ -8,7 +8,7 @@
 // @include       http://chat.stackoverflow.com/rooms/*
 // ==/UserScript==
 // edits by rlemon
-// added auto hide
+// added auto hide slide down and slide left effects.
 // refactored code, reduced DOM calls and improved readability
 // removed the useless line that asked "is this the room you are looking for?" 
 // improved performance by using native DOM api within jQuery. 
