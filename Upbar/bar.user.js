@@ -32,7 +32,7 @@ EmbedCodeOnPage("(" + function_contents.toString() + ")()");
 }
 
 EmbedFunctionOnPageAndExecute(function() {
-	$('.sidebar-widget .fr.msg-small').remove();
+	//$('.sidebar-widget .fr.msg-small').remove();
 	var topbar = $(document.createElement('div')), chat_body = $(document.getElementById('chat-body')), top, hidden = false;
 	topbar.css({
 		'position': 'fixed',
