@@ -11,7 +11,9 @@
 // added auto hide
 // refactored code, reduced DOM calls and improved readability
 // removed the useless line that asked "is this the room you are looking for?" 
-
+// improved performance by using native DOM api within jQuery. 
+// ????
+// profit
 
 // This function embeds code on the actual page. 
 function EmbedCodeOnPage(javascript_code) 
@@ -30,7 +32,7 @@ EmbedCodeOnPage("(" + function_contents.toString() + ")()");
 }
 
 EmbedFunctionOnPageAndExecute(function() {
-	var topbar = $("<div>");
+	var topbar = $(document.createElement('div'));
 	topbar.css({
 		'position': 'fixed',
 		'top': '-40px',
@@ -42,8 +44,8 @@ EmbedFunctionOnPageAndExecute(function() {
 		'box-shadow': '0px 5px 10px #777',
 		'padding': '5px'
 	});
-    topbar.append( $('#present-users').detach() );
-    topbar.append( $('#sidebar-menu').detach() );
+    topbar.append( $(document.getElementById('present-users')).detach() );
+    topbar.append( $(document.getElementById('sidebar-menu')).detach() );
     $('.sidebar-widget .fr.msg-small').remove();
 	topbar.hover(function() {
 		$(this).stop(true, true).animate({top:0}, 300); 
@@ -51,5 +53,5 @@ EmbedFunctionOnPageAndExecute(function() {
 		$(this).stop(false, false).animate({top:-40}, 300); 
 	});
 	
-    $('#chat-body').append(topbar);
+    $(document.getElementById('chat-body')).append(topbar);
 });
