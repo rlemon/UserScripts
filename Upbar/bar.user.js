@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name          UserUp
-// @author        Amith kk
-// @version       1.0
-// @namespace amith.dasroot.net
+// @author        Amith kk | rlemon
+// @version       1.3
+// @namespace     amith.dasroot.net
 // @description	  Moves the userlist to the top
 // @include       http://chat.stackexchange.com/rooms/*
 // @include       http://chat.stackoverflow.com/rooms/*
@@ -11,7 +11,9 @@
 // added auto hide slide down and slide left effects.
 // refactored code, reduced DOM calls and improved readability
 // removed the useless line that asked "is this the room you are looking for?" 
-// improved performance by using native DOM api within jQuery. 
+// improved performance by using native DOM api within jQuery.
+// added sticky button to keep user list open
+// added cookie support for sticky button
 // ????
 // profit
 
@@ -58,8 +60,9 @@ EmbedFunctionOnPageAndExecute(function() {
 		createCookie(name,"",-1);
 	};
 	
+	/* top bar */
 	var topbar = $(document.createElement('div')), sticky = $(document.createElement('a')), menu = $(document.getElementById('sidebar-menu')), chat_body = $(document.getElementById('chat-body')), top, hidden = false, stuck = false, cname = 'sechat_topbar_sticky';
-	
+	/* top bar functions */
 	var checkTop = function() {
 		if( $(window).scrollTop() === 0 ) {
 			topbar.stop(true, true).animate({left: -(topbar.width() - 6)},300);
@@ -79,7 +82,7 @@ EmbedFunctionOnPageAndExecute(function() {
 		_top = -(topbar.height() - 15);
 		topbar.css('top', (stuck ? 0 : _top));
 	};
-	
+	/* run this shiz */
 	stuck = readCookie(cname);
 	sticky.text( (stuck ? 'unstick' : 'stick') );
 	sticky.css('float', 'right');
