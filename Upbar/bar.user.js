@@ -7,6 +7,11 @@
 // @include       http://chat.stackexchange.com/rooms/*
 // @include       http://chat.stackoverflow.com/rooms/*
 // ==/UserScript==
+// edits by rlemon
+// added auto hide
+// refactored code, reduced DOM calls and improved readability
+// removed the useless line that asked "is this the room you are looking for?" 
+
 
 // This function embeds code on the actual page. 
 function EmbedCodeOnPage(javascript_code) 
