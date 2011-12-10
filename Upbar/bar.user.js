@@ -85,10 +85,11 @@ EmbedFunctionOnPageAndExecute(function() {
 	/* run this shiz */
 	stuck = readCookie(cname);
 	sticky.text( (stuck ? 'unstick' : 'stick') );
-	sticky.css('float', 'right');
-	sticky.attr('href', '#');
-	sticky.bind('click', function(event) {
-		event.preventDefault();
+	sticky.css({
+		'float': 'right',
+		'cursor': 'pointer'
+	});
+	sticky.bind('click', function() {
 		stuck = !stuck;
 		if( stuck ) {
 			$(this).text('unstick');
