@@ -39,6 +39,7 @@ EmbedFunctionOnPageAndExecute(function() {
 	});
     topbar.append( $('#present-users').detach() );
     topbar.append( $('#sidebar-menu').detach() );
+    $('.sidebar-widget .fr.msg-small').remove();
 	topbar.hover(function() {
 		$(this).stop(true, true).animate({top:0}, 300); 
 	}, function() {
