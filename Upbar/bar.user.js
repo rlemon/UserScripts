@@ -32,10 +32,10 @@ EmbedCodeOnPage("(" + function_contents.toString() + ")()");
 }
 
 EmbedFunctionOnPageAndExecute(function() {
-	var topbar = $(document.createElement('div'));
+	$('.sidebar-widget .fr.msg-small').remove();
+	var topbar = $(document.createElement('div')), chat_body = $(document.getElementById('chat-body')), top, hidden = false;
 	topbar.css({
 		'position': 'fixed',
-		'top': '-40px',
 		'left': '0px',
 		'z-index': '1',
 		'width': '49%',
@@ -46,12 +46,28 @@ EmbedFunctionOnPageAndExecute(function() {
 	});
     topbar.append( $(document.getElementById('present-users')).detach() );
     topbar.append( $(document.getElementById('sidebar-menu')).detach() );
-    $('.sidebar-widget .fr.msg-small').remove();
+    chat_body.append(topbar);
+
+	this.onresize = function() {
+		_top = -(topbar.height() - 15);
+		topbar.css('top', _top);
+	};
+	this.onresize();
+
 	topbar.hover(function() {
 		$(this).stop(true, true).animate({top:0}, 300); 
 	}, function() {
-		$(this).stop(false, false).animate({top:-40}, 300); 
+		$(this).stop(false, false).animate({top:_top}, 300); 
 	});
 	
-    $(document.getElementById('chat-body')).append(topbar);
+	$(this).scroll(function() {
+		if( $(this).scrollTop() === 0 ) {
+			topbar.stop(true, true).animate({left: -(topbar.width() - 6)},300);
+			hidden = true;
+			return;
+		}
+		if( hidden ) {
+			topbar.stop(false, false).animate({left: 0},300);
+		}		
+	});
 });
