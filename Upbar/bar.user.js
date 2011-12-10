@@ -33,7 +33,36 @@ EmbedCodeOnPage("(" + function_contents.toString() + ")()");
 
 EmbedFunctionOnPageAndExecute(function() {
 	//$('.sidebar-widget .fr.msg-small').remove();
-	var topbar = $(document.createElement('div')), chat_body = $(document.getElementById('chat-body')), top, hidden = false;
+	var topbar = $(document.createElement('div')), sticky = $(document.createElement('a')), menu = $(document.getElementById('sidebar-menu')), chat_body = $(document.getElementById('chat-body')), top, hidden = false, stuck = false;
+	
+	var checkTop = function() {
+		if( $(window).scrollTop() === 0 ) {
+			topbar.stop(true, true).animate({left: -(topbar.width() - 6)},300);
+			hidden = true;
+			return true;
+		}
+		return false;
+	};
+	var checkHidden = function() {
+		if( hidden ) {
+			topbar.stop().animate({left: 0},300);
+			hidden = false;
+		}
+	};
+	
+	sticky.text('stick');
+	sticky.css('float', 'right');
+	sticky.attr('href', '#');
+	sticky.bind('click', function(event) {
+		event.preventDefault();
+		stuck = !!!stuck;
+		if( stuck ) {
+			$(this).text('unstick');
+		} else {
+			$(this).text('stick');
+		}
+	});
+	menu.append(sticky);
 	topbar.css({
 		'position': 'fixed',
 		'left': '0px',
@@ -45,7 +74,7 @@ EmbedFunctionOnPageAndExecute(function() {
 		'padding': '5px'
 	});
     topbar.append( $(document.getElementById('present-users')).detach() );
-    topbar.append( $(document.getElementById('sidebar-menu')).detach() );
+    topbar.append( menu.detach() );
     chat_body.append(topbar);
 
 	this.onresize = function() {
@@ -53,22 +82,25 @@ EmbedFunctionOnPageAndExecute(function() {
 		topbar.css('top', _top);
 	};
 	this.onresize();
-
+	
 	topbar.hover(function() {
-		$(this).stop(true, true).animate({top:0}, 300); 
+		if( !stuck ) {
+			$(this).stop(true, true).animate({top:0}, 300, function() {
+				checkHidden();
+			});
+		}
+
 	}, function() {
-		$(this).stop(false, false).animate({top:_top}, 300); 
+		if( !stuck ) {
+			$(this).stop(false, false).animate({top:_top}, 300);
+			checkTop();
+		}
 	});
 	
 	$(this).scroll(function() {
-		if( $(this).scrollTop() === 0 ) {
-			topbar.stop(true, true).animate({left: -(topbar.width() - 6)},300);
-			hidden = true;
+		if( checkTop() ) {
 			return;
 		}
-		if( hidden ) {
-			topbar.stop(false, false).animate({left: 0},300);
-			hidden = false;
-		}		
+		checkHidden();		
 	});
 });
