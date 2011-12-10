@@ -68,6 +68,7 @@ EmbedFunctionOnPageAndExecute(function() {
 		}
 		if( hidden ) {
 			topbar.stop(false, false).animate({left: 0},300);
+			hidden = false;
 		}		
 	});
 });
