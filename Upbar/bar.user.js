@@ -55,7 +55,7 @@ EmbedFunctionOnPageAndExecute(function() {
 	sticky.attr('href', '#');
 	sticky.bind('click', function(event) {
 		event.preventDefault();
-		stuck = !!!stuck;
+		stuck = !stuck;
 		if( stuck ) {
 			$(this).text('unstick');
 		} else {
