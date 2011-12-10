@@ -136,9 +136,8 @@ EmbedFunctionOnPageAndExecute(function() {
 	});
 	
 	$(this).scroll(function() {
-		if( checkTop() ) {
-			return;
+		if( !checkTop() ) {
+			checkHidden();
 		}
-		checkHidden();		
 	});
 });
