@@ -3,7 +3,7 @@
 // @author        rlemon
 // @version       0.3
 // @namespace     rlemon.com
-// @description	  Makes the backspace button function as browser back button.
+// @description	  Gives Windows functionality to the Browser Backspace button.
 // @include       *
 // ==/UserScript==
 
