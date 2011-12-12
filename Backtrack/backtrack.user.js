@@ -7,32 +7,40 @@
 // @include       *
 // ==/UserScript==
 
-// util
-function EmbedCodeOnPage(a){var b=document.createElement("script");b.type="text/javascript";b.textContent=a;document.getElementsByTagName("head")[0].appendChild(b)}function EmbedFunctionOnPageAndExecute(a){EmbedCodeOnPage("("+a.toString()+")()")};
+function EmbedCodeOnPage(kode) {
+	var script = document.createElement('script');
+	script.textContent = kode;
+	document.head.appendChild(script);
+}
+function EmbedFunctionOnPageAndExecute(fn) {
+	EmbedCodeOnPage("(function() {" + fn.toString() + "})();")
+};
 
 EmbedFunctionOnPageAndExecute(function() {
 	var BackTrackListener = function(event) {
-		if (!event.ctrlKey && !event.altKey) {
-			var target = event.target;
-			if (event.which == 8 && target) {               
-				if (target.type == 'text' || target.type == 'textarea' || target.type == 'password' || target.isContentEditable) {
-					return true;
-				} else {
-					window.setTimeout(function() {
-						BackTrack(event.shiftKey);
-					}, 0);
-					return false;
-				}
-			}
+		var target = event.target;
+		if( isValidEvent(event) && isValidTarget(target) ) {
+			window.setTimeout(function() {
+				BackTrack(event.shiftKey);
+			}, 0);
+			return false;
 		}
 		return true;
+	};
+	var invalidTypes = {
+		text : true,
+		textarea : true,
+		password : true
+	};
+	function BackTrack(forward) {
+		var method = forward ? 'forward' : 'back';
+		window.history[method]();
 	}
-	var BackTrack = function(forward) {
-		if (!forward) {
-			window.history.back();
-		} else {
-			window.history.forward();
-		}
+	function isValidTarget(target) {
+		return target && !( target.type in invalidTypes || target.isContentEditable );
+	}
+	function isValidEvent(event) {
+		return !( event.ctrlKey || event.shiftKey ) && event.which === 8;
 	}
 	document.onkeydown = BackTrackListener;
 });
