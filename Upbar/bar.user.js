@@ -1,102 +1,91 @@
 // ==UserScript==
 // @name          UserUp
-// @author        Amith kk | rlemon
-// @version       1.3
-// @namespace     amith.dasroot.net
-// @description	  Moves the userlist to the top
+// @author        rlemon
+// @version       2.0
+// @namespace     rlemon.com
+// @description	  Moves the userlist to the top allowing for MOAR STARS
 // @include       http://chat.stackexchange.com/rooms/*
 // @include       http://chat.stackoverflow.com/rooms/*
 // ==/UserScript==
-// edits by rlemon
-// added auto hide slide down and slide left effects.
-// refactored code, reduced DOM calls and improved readability
-// removed the useless line that asked "is this the room you are looking for?" 
-// improved performance by using native DOM api within jQuery.
-// added sticky button to keep user list open
-// added cookie support for sticky button
-// ????
-// profit
+// Original concept by AmithKK | https://github.com/Amithkk
 
-// This function embeds code on the actual page. 
-function EmbedCodeOnPage(javascript_code) 
-{ 
-var code_element = document.createElement('script'); 
-code_element.type = 'text/javascript'; 
-code_element.textContent = javascript_code; 
-document.getElementsByTagName('head')[0].appendChild(code_element); 
-} 
-
-// This function allows us to embed a function on the 
-// page that will immediately get executed. 
-function EmbedFunctionOnPageAndExecute(function_contents) 
-{ 
-EmbedCodeOnPage("(" + function_contents.toString() + ")()"); 
+function EmbedCodeOnPage(jcode) {
+	var script = document.createElement('script');
+	script.type = 'text/javascript';
+	script.textContent = jcode;
+	document.head.appendChild(script);
+}
+function EmbedFunctionOnPageAndExecute(function_contents) {
+	EmbedCodeOnPage('(function() {' + function_contents.toString() + '})();');
 }
 
 EmbedFunctionOnPageAndExecute(function() {
-	/* Cookie functions */
-	var createCookie = function(name,value,days) {
+	var createCookie = function(name, value, days) {
 		if (days) {
 			var date = new Date();
-			date.setTime(date.getTime()+(days*24*60*60*1000));
-			var expires = "; expires="+date.toGMTString();
+			date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+			var expires = '; expires=' + date.toGMTString();
 		}
-		else var expires = "";
-		document.cookie = name+"="+value+expires+"; path=/";
+		else var expires = '';
+		document.cookie = name + '=' + value + expires + '; path=/';
 	};
-
 	var readCookie = function(name) {
-		var nameEQ = name + "=";
+		var nameEQ = name + '=';
 		var ca = document.cookie.split(';');
-		for(var i=0;i < ca.length;i++) {
+		for (var i = 0; i < ca.length; i++) {
 			var c = ca[i];
-			while (c.charAt(0)==' ') c = c.substring(1,c.length);
-			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+			while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
 		}
 		return null;
 	};
-
 	var eraseCookie = function(name) {
-		createCookie(name,"",-1);
+		createCookie(name, '', -1);
 	};
-	
-	/* top bar */
-	var topbar = $(document.createElement('div')), sticky = $(document.createElement('a')), menu = $(document.getElementById('sidebar-menu')), chat_body = $(document.getElementById('chat-body')), top, hidden = false, stuck = false, cname = 'sechat_topbar_sticky';
-	/* top bar functions */
+	var topbar = $(document.createElement('div')),
+		sticky = $(document.createElement('a')),
+		menu = $(document.getElementById('sidebar-menu')),
+		chat_body = $(document.getElementById('chat-body')),
+		top, hidden = false,
+		stuck = false,
+		cname = 'sechat_topbar_sticky';
 	var checkTop = function() {
-		if( $(window).scrollTop() === 0 ) {
-			topbar.stop(true, true).animate({left: -(topbar.width() - 6)},300);
+		if ($(window).scrollTop() === 0) {
+			topbar.stop(true, true).animate({
+				left: -(topbar.width() - 6)
+			}, 300);
 			hidden = true;
 			return true;
 		}
 		return false;
 	};
 	var checkHidden = function() {
-		if( hidden ) {
-			topbar.stop().animate({left: 0},300);
+		if (hidden) {
+			topbar.stop().animate({
+				left: 0
+			}, 300);
 			hidden = false;
 		}
 	};
-	
-	var setHeight = function() {
-		_top = -(topbar.height() - 15);
+	var setPositionTop = function() {
+		_top = -(topbar.outerHeight() - 25);
 		topbar.css('top', (stuck ? 0 : _top));
 	};
-	/* run this shiz */
 	stuck = readCookie(cname);
-	sticky.text( (stuck ? 'unstick' : 'stick') );
+	sticky.text((stuck ? 'unstick' : 'stick'));
 	sticky.css({
 		'float': 'right',
+		'margin': '2px 1px 0 0',
 		'cursor': 'pointer'
 	});
 	sticky.bind('click', function() {
 		stuck = !stuck;
-		if( stuck ) {
+		if (stuck) {
 			$(this).text('unstick');
-			createCookie(cname, true, 14); 
+			createCookie(cname, true, 14);
 		} else {
 			$(this).text('stick');
-			eraseCookie(cname); 
+			eraseCookie(cname);
 		}
 	});
 	menu.append(sticky);
@@ -110,33 +99,31 @@ EmbedFunctionOnPageAndExecute(function() {
 		'box-shadow': '0px 5px 10px #777',
 		'padding': '5px'
 	});
-    topbar.append( $(document.getElementById('present-users')).detach() );
-    topbar.append( menu.detach() );
-    chat_body.append(topbar);
-	setHeight();
+	topbar.append($(document.getElementById('present-users')).detach());
+	topbar.append(menu.detach());
+	chat_body.append(topbar);
 	this.onresize = function() {
-		if( !stuck ) {
-			setHeight();
-		}
+		setPositionTop();
 	};
 	this.onresize();
-	
 	topbar.hover(function() {
-		if( !stuck ) {
-			$(this).stop(true, true).animate({top:0}, 300, function() {
+		if (!stuck) {
+			$(this).stop(true, true).animate({
+				top: 0
+			}, 300, function() {
 				checkHidden();
 			});
 		}
-
 	}, function() {
-		if( !stuck ) {
-			$(this).stop(false, false).animate({top:_top}, 300);
+		if (!stuck) {
+			$(this).stop(false, false).animate({
+				top: _top
+			}, 300);
 			checkTop();
 		}
 	});
-	
 	$(this).scroll(function() {
-		if( !checkTop() ) {
+		if (!checkTop()) {
 			checkHidden();
 		}
 	});
