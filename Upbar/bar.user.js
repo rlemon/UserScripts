@@ -16,7 +16,7 @@ function EmbedCodeOnPage(jcode) {
 	document.head.appendChild(script);
 }
 function EmbedFunctionOnPageAndExecute(function_contents) {
-	EmbedCodeOnPage('(function() {' + function_contents.toString() + '})();');
+	EmbedCodeOnPage('(' + function_contents.toString() + ')()');
 }
 
 EmbedFunctionOnPageAndExecute(function() {
