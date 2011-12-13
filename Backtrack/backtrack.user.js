@@ -8,12 +8,12 @@
 // ==/UserScript==
 
 function EmbedCodeOnPage(kode) {
-    var script = document.createElement('script');
-    script.textContent = kode;
-    document.head.appendChild(script);
+    var elm = document.createElement('script');
+    elm.textContent = kode;
+    document.head.appendChild(elm);
 }
 function EmbedFunctionOnPageAndExecute(fn) {
-    EmbedCodeOnPage("(function() {" + fn.toString() + "})();");
+    EmbedCodeOnPage("(" + fn.toString() + ")()");
 }
 
 EmbedFunctionOnPageAndExecute(function() {
