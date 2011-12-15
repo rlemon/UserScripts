@@ -7,8 +7,8 @@
 <p>The 'stick' button (does not appear in the screenshots) when enabled will keep the top bar open, 'unstick' will resume the auto-hide functionality. Note: Stick option is remembered per-domain for 14 days in your browsers Cookies</p>
 <hr>
 Some Screen Shots
-<p><a href="https://github.com/rlemon/UserScripts/raw/master/Upbar/docs/UpBar_rlemonMod.png" title="open image in new window" target="_blank"><img height="127" width="400" title="See the new bar, and all the space left over" src="https://github.com/rlemon/UserScripts/raw/master/Upbar/docs/UpBar_rlemonMod.png" alt="screenie one" /></a></p>
+<p><a href="https://github.com/rlemon/UserScripts/tree/master/StackExchange/Upbar/docs/UpBar_rlemonMod.png" title="open image in new window" target="_blank"><img height="127" width="400" title="See the new bar, and all the space left over" src="https://github.com/rlemon/UserScripts/tree/master/StackExchange/Upbar/docs/UpBar_rlemonMod.png" alt="screenie one" /></a></p>
 <p><em>mouseover the visible part of the UpBar to display the user list for the room</em></p>
-<p><a href="https://github.com/rlemon/UserScripts/raw/master/Upbar/docs/UpBar_rlemonMod_hover.png" title="open image in new window" target="_blank"><img height="95" width="400" title="Mouseover effects are awesome!" src="https://github.com/rlemon/UserScripts/raw/master/Upbar/docs/UpBar_rlemonMod_hover.png" alt="screenie one" /></a></p>
-<p>click <a href="https://github.com/rlemon/UserScripts/raw/master/Upbar/bar.user.js">here to install</a></p>
+<p><a href="https://github.com/rlemon/UserScripts/tree/master/StackExchange/Upbar/docs/UpBar_rlemonMod_hover.png" title="open image in new window" target="_blank"><img height="95" width="400" title="Mouseover effects are awesome!" src="https://github.com/rlemon/UserScripts/tree/master/StackExchange/Upbar/docs/UpBar_rlemonMod_hover.png" alt="screenie one" /></a></p>
+<p>click <a href="https://github.com/rlemon/UserScripts/tree/master/StackExchange/Upbar/bar.user.js">here to install</a></p>
 <p>Enjoy!,<br />rlemon.</p>
