@@ -40,7 +40,7 @@ EmbedFunctionOnPageAndExecute(function() {
         return target && !( target.type in invalidTypes || target.isContentEditable );
     }
     function isValidEvent(event) {
-        return !( event.ctrlKey || event.shiftKey ) && event.which === 8;
+        return !( event.ctrlKey || event.altKey ) && event.which === 8;
     }
     document.onkeydown = BackTrackListener;
 });
