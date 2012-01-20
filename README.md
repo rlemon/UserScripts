@@ -1,3 +1,4 @@
+#ALL USERSCRIPTS WILL MOVE TO THEIR OWN REPOS FOR MANAGEMENT PURPOSES!
 Collection of userscripts.. 
 #TODO
 ##StackExchange Specific
